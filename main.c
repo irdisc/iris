@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
             {
                 const char *action = argv[i + 1];
                 const char *IP = argv[i + 2];
+                const char *IPv6 = (i + 3 < argc) ? argv[i + 3] : "IPv4";
                 int result = -1;
                 PyStatus status;
                 PyConfig config;
@@ -47,9 +48,10 @@ int main(int argc, char *argv[])
 
                 wchar_t *wIP = Py_DecodeLocale(IP, NULL);
                 wchar_t *waction = Py_DecodeLocale(action, NULL);
+                wchar_t *wIPv6 = Py_DecodeLocale(IPv6, NULL);
 
-                wchar_t *args[] = {waction, wIP};
-                status = PyConfig_SetArgv(&config, 2, args);
+                wchar_t *args[] = {waction, wIP, wIPv6};
+                status = PyConfig_SetArgv(&config, 3, args);
 
                 // Check if the next argument is -mk and if there is a directory name provided
                 if (strcmp(action, "-tcp") == 0)
