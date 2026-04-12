@@ -46,8 +46,9 @@ int main(int argc, char *argv[])
                 PyConfig_InitIsolatedConfig(&config);
 
                 wchar_t *wIP = Py_DecodeLocale(IP, NULL);
+                wchar_t *waction = Py_DecodeLocale(action, NULL);
 
-                wchar_t *args[] = {L"main_app", wIP};
+                wchar_t *args[] = {waction, wIP};
                 status = PyConfig_SetArgv(&config, 2, args);
 
                 // Check if the next argument is -mk and if there is a directory name provided
@@ -65,9 +66,19 @@ int main(int argc, char *argv[])
                     PyMem_RawFree(wIP);
                     return 0;
                 }
-                else if (strcmp(action, "-upd") == 0)
+                else if (strcmp(action, "-udp") == 0)
                 {
-                    printf("tst");
+                    status = Py_InitializeFromConfig(&config);
+                    FILE *file = fopen("main.py", "r");
+                    if (file)
+                    {
+                        PyRun_SimpleFile(file, "main.py");
+                        fclose(file);
+                    }
+                    Py_Finalize();
+                    PyConfig_Clear(&config);
+                    PyMem_RawFree(wIP);
+                    return 0;
                 }
                 else
                 {

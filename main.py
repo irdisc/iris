@@ -24,5 +24,11 @@ def request(self, IP):
 if __name__ == '__main__':
     # Access the same index you used in C
     IP = sys.argv[1] 
-    print(f"IP address passed to script: {IP}")
-    request(self="", IP=IP)
+    Protocol = sys.argv[0]
+    if Protocol == "-tcp":
+     print(f"Protocol: {Protocol}") 
+     print(f"IP address passed to script: {IP}")
+     request(self="", IP=IP)
+    if Protocol == "-udp":
+     print(f"Protocol: {Protocol}") 
+     print(f"IP address passed to script: {IP}")  
