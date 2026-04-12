@@ -1,3 +1,9 @@
+# # # # # # # # # # # # # # # # # # # # # # # #
+# Copyright (c) 2026 Nora Rose                # 
+# All rights reserved.                        #
+# This code is proprietary of Nora Rose.      #
+# # # # # # # # # # # # # # # # # # # # # # # #
+
 import socket
 import time
 import sys

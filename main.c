@@ -6,6 +6,12 @@
 #include <sys/stat.h>
 #include <python3.15/Python.h>
 
+/*
+ * Copyright (c) 2026 Nora Rose
+ * All rights reserved.
+ * This code is proprietary of Nora Rose.
+ */
+
 int main(int argc, char *argv[])
 {
     if (argc < 2)
