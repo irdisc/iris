@@ -24,15 +24,17 @@ int main(int argc, char *argv[])
     {
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
         {
-            printf("Usage: main.exe [options]\n");
+            printf("Usage: iris+ [options]\n");
             printf("Options:\n");
             printf("  -h, --help     Show this help message\n");
             printf("  -v, --version  Show version info\n");
+            printf("--------------- SCAN PORT ---------------\n");
+            printf("  -scan, requires -tcp or -udp and <IP> Optional: > -ipv6\n");
             return 0;
         }
         else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0)
         {
-            printf("Version 1.0\n");
+            printf("Iris+ | Version 1.0\n");
             return 0;
         }
         else if (strcmp(argv[i], "-hi") == 0 || strcmp(argv[i], "--hello") == 0)
@@ -40,13 +42,13 @@ int main(int argc, char *argv[])
             printf("Hello Word by");
             printf("---------------\n");
         }
-        else if (strcmp(argv[i], "-scan") == 0)
+        else if (strcmp(argv[i], "-scan") == 0) // Added check for -scan action
         {
             if (i + 2 < argc)
             {
-                const char *action = argv[i + 1];
-                const char *IP = argv[i + 2];
-                const char *IPv6 = (i + 3 < argc) ? argv[i + 3] : "IPv4";
+                const char *action = argv[i + 1];                         // Required argument for action (-tcp or -udp)
+                const char *IP = argv[i + 2];                             // Required argument for IP address
+                const char *IPv6 = (i + 3 < argc) ? argv[i + 3] : "IPv4"; // Optional argument for IPv6, default to "IPv4" if not provided
                 int result = -1;
                 PyStatus status;
                 PyConfig config;
@@ -57,9 +59,9 @@ int main(int argc, char *argv[])
                 wchar_t *wIPv6 = Py_DecodeLocale(IPv6, NULL);
 
                 wchar_t *args[] = {waction, wIP, wIPv6};
-                status = PyConfig_SetArgv(&config, 3, args);
+                status = PyConfig_SetArgv(&config, 3, args); // Set the command-line arguments for the Python interpreter
 
-                // Check if the next argument is -mk and if there is a directory name provided
+                // Check if the action is -tcp or -udp and run the corresponding Python code
                 if (strcmp(action, "-tcp") == 0)
                 {
                     status = Py_InitializeFromConfig(&config);
@@ -74,7 +76,7 @@ int main(int argc, char *argv[])
                     PyMem_RawFree(wIP);
                     return 0;
                 }
-                else if (strcmp(action, "-udp") == 0)
+                else if (strcmp(action, "-udp") == 0) // Added check for -udp action
                 {
                     status = Py_InitializeFromConfig(&config);
                     FILE *file = fopen("main.py", "r");
@@ -90,17 +92,17 @@ int main(int argc, char *argv[])
                 }
                 else
                 {
-                    printf("Error: -dir requires -mk | -rm <name>\n");
+                    printf("Error: -scan requires -tcp | -udp <192.0.2.1>\n");
                     return 1;
                 }
-                // Skip the next two arguments since they have been processed
+                // Move the index past the arguments for -scan
                 i = 2;
                 continue;
-                // If -dir is provided without enough arguments, print an error message
+                // If -scan is provided without enough arguments, print an error message
             }
             else
             {
-                printf("Error: -dir requires <action> and <name>\n");
+                printf("Error: -scan requires <Protocol> and <192.0.2.1>\n");
                 return 1;
             }
             // If the argument starts with '-' but is not recognized, print an error message
