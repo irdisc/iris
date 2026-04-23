@@ -90,6 +90,9 @@ int main(int argc, char *argv[])
                     PyMem_RawFree(wIP);
                     return 0;
                 }
+                else if (strcmp(argv[i], "-subfinder") == 0)
+                {
+                }
                 else
                 {
                     printf("Error: -scan requires -tcp | -udp <192.0.2.1>\n");
