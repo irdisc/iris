@@ -90,26 +90,51 @@ int main(int argc, char *argv[])
                     PyMem_RawFree(wIP);
                     return 0;
                 }
-                else if (strcmp(argv[i], "-subfinder") == 0)
-                {
-                }
-                else
-                {
-                    printf("Error: -scan requires -tcp | -udp <192.0.2.1>\n");
-                    return 1;
-                }
-                // Move the index past the arguments for -scan
-                i = 2;
-                continue;
-                // If -scan is provided without enough arguments, print an error message
             }
             else
             {
-                printf("Error: -scan requires <Protocol> and <192.0.2.1>\n");
+                printf("Er111ror: -scan requires -tcp | -udp <192.0.2.1>\n");
                 return 1;
             }
-            // If the argument starts with '-' but is not recognized, print an error message
+            // Move the index past the arguments for -scan
+            i = 2;
+            continue;
+            // If -scan is provided without enough arguments, print an error message
         }
+        else if (strcmp(argv[i], "-subfinder") == 0)
+        {
+            if (i + 2 < argc)
+
+            {
+                const char *action = argv[i + 1]; // Required argument for action (-tcp or -udp)
+                const char *DOMAIN = argv[i + 2]; // Required argument for IP address
+                // const char *IPv6 = (i + 3 < argc) ? argv[i + 3] : "IPv4"; // Optional argument for IPv6, default to "IPv4" if not provided
+                int result = -1;
+                PyStatus status;
+                PyConfig config;
+                PyConfig_InitIsolatedConfig(&config);
+
+                wchar_t *wIP = Py_DecodeLocale(DOMAIN, NULL);
+                wchar_t *waction = Py_DecodeLocale(action, NULL);
+                // wchar_t *wIPv6 = Py_DecodeLocale(IPv6, NULL);
+
+                wchar_t *args[] = {waction, wIP};
+                status = PyConfig_SetArgv(&config, 2, args);
+                if (strcmp(action, "-find") == 0)
+                {
+                    printf("%s", DOMAIN);
+                    return 1;
+                }
+            }
+            else
+            {
+                printf("Error: -subfinder requires -find <google.com>\n");
+                return 1;
+            }
+        }
+
+        // If the argument starts with '-' but is not recognized, print an error message
+
         else if (argv[i][0] == '-')
         { // Removed the extra ']' here
             printf("Unknown option: %s\n", argv[i]);

@@ -1,0 +1,1 @@
+gcc -o main main.c -I/usr/include/python3.x -lpython3.x
