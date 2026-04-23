@@ -6,4 +6,6 @@ void getaddrinfo(const char *node,
                  const struct addrinfo *hints,
                  struct addrinfo **res);
 
+void freeaddrinfo(struct addrinfo *res);
+
 #endif
