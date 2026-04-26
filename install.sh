@@ -1,1 +1,5 @@
-gcc -o main main.c -I/usr/include/python3.x -lpython3.x
+#!/bin/bash
+mkdir -p build
+make
+cp bin/refinder /usr/local/bin/
+echo "Installed refinder to /usr/local/bin/"
