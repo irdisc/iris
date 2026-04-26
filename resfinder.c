@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include "libnet/libnet.h"
 int main(int argc, char *argv[])
 {
     if (argc > 1)
@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
         char *DOMAIN = strdup(argv[1]);
         if (DOMAIN == NULL)
             return 1;
-        printf("%s", DOMAIN);
+        getsub(DOMAIN);
         free(DOMAIN);
     }
     else
