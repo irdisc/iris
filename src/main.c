@@ -65,10 +65,10 @@ int main(int argc, char *argv[])
                 if (strcmp(action, "-tcp") == 0)
                 {
                     status = Py_InitializeFromConfig(&config);
-                    FILE *file = fopen("main.py", "r");
+                    FILE *file = fopen("/scripts/main.py", "r");
                     if (file)
                     {
-                        PyRun_SimpleFile(file, "main.py");
+                        PyRun_SimpleFile(file, "/scripts/main.py");
                         fclose(file);
                     }
                     Py_Finalize();
