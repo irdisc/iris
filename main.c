@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
                 status = PyConfig_SetArgv(&config, 2, args);
                 if (strcmp(action, "-find") == 0)
                 {
-                    printf("%s", DOMAIN);
+                    execlp("./sub", "./main", argv[3], NULL);
                     return 1;
                 }
             }
