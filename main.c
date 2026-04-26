@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
             continue;
             // If -scan is provided without enough arguments, print an error message
         }
-        else if (strcmp(argv[i], "-subfinder") == 0)
+        else if (strcmp(argv[i], "-resfinder") == 0)
         {
             if (i + 2 < argc)
 
@@ -122,13 +122,13 @@ int main(int argc, char *argv[])
                 status = PyConfig_SetArgv(&config, 2, args);
                 if (strcmp(action, "-find") == 0)
                 {
-                    execlp("./sub", "./main", argv[3], NULL);
+                    execlp("./resfinder", "./main", argv[3], NULL);
                     return 1;
                 }
             }
             else
             {
-                printf("Error: -subfinder requires -find <google.com>\n");
+                printf("Error: -resfinder requires -find <google.com>\n");
                 return 1;
             }
         }
