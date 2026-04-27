@@ -8,14 +8,14 @@ TARGET = $(BIN_DIR)/iris+ $(BIN_DIR)/resfinder
 all: $(TARGET)
 
 $(BIN_DIR)/iris+: src/main.c 
-       ^I@mkdir -p $(BIN_DIR)
-	   ^I$(CC) $^ $(LDFLAGS) -o $@ 
+[TAB]@mkdir -p $(BIN_DIR)
+[TAB]$(CC) $^ $(LDFLAGS) -o $@  
 
 
 $(BIN_DIR)/resfinder: modules/scripts/resfinder.c libnet/libnet.c
-       ^I@mkdir -p $(BIN_DIR)
-	   ^I$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
+[TAB]@mkdir -p $(BIN_DIR)
+[TAB]$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
 
 .PHONY: clean
 clean:
-   rm -f $(TARGETS)
+   [TAB]rm -f $(TARGETS)
