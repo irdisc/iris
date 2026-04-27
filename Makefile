@@ -18,4 +18,4 @@ $(BIN_DIR)/resfinder: modules/scripts/resfinder.c libnet/libnet.c
 
 .PHONY: clean
 clean:
-   	rm -f $(TARGET)
+	rm -f $(TARGET)
