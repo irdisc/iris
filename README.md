@@ -1,9 +1,16 @@
 # Iris+
-
-
-
+Iris+ is tool for **Scaning Port** or **Domain Resolveing** and more soon. Program in **C** and **CPython.**
+## Requirements
+* [**CPython**](https://github.com/python/cpython)
+## Debian base system
+```bash
+sudo apt install build-essential
+```
+## Arch base system
+```bash
+sudo pacman -S base-devel
+```
 ---
-
 ## ✨ Key Features
                         
 *   **Port Scan** You can easyliy run it By use this command, Optional you can use TCP `<-tcp>` or UDP `<-udp>`  and IPV6 `<-ipv6>` 
@@ -26,9 +33,22 @@ installation command:
 # Example installation (Keep you git install)
 git clone https://github.com/transcrimee/iris+.git && cd iris+ 
 ```
-
+---
+### Install Scripts
 ```bash
 # Then run install.sh
 ./intall.sh 
+```
+---
+#### Or 
+```bash
+# Then run mkdir
+mkdir -p build && cd build
+```
+--- 
+#### Next
+```bash
+# Then run make
+make
 ```
 ---
