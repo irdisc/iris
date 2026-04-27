@@ -8,12 +8,12 @@ TARGET = $(BIN_DIR)/iris+ $(BIN_DIR)/resfinder
 all: $(TARGET)
 
 $(BIN_DIR)/iris+: src/main.c 
-       @mkdir -p $(BIN_DIR)
+	@mkdir -p $(BIN_DIR)
 	   $(CC) $^ $(LDFLAGS) -o $@ 
 
 
 $(BIN_DIR)/resfinder: modules/scripts/resfinder.c libnet/libnet.c
-       @mkdir -p $(BIN_DIR)
+	@mkdir -p $(BIN_DIR)
 	   $(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
 
 .PHONY: clean
