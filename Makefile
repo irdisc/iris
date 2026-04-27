@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -Iinclude -I/usr/include/python3.15  -Wall
+CC = gcc 
+CFLAGS = -Iinclude -I./libnet/include -I/usr/include/python3.15  -Wall
 LDFLAGS = -lpython3.15
 BIN_DIR = bin
 SRC = src/main.c /modules/scripts/resfinder.c
