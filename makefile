@@ -17,5 +17,5 @@ $(BIN_DIR)/resfinder: modules/scripts/resfinder.c libnet/libnet.c
 	   ^I$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
 
 .PHONY: clean
-chean:
+clean:
    rm -f $(TARGETS)
