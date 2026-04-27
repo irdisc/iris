@@ -79,10 +79,10 @@ int main(int argc, char *argv[])
                 else if (strcmp(action, "-udp") == 0) // Added check for -udp action
                 {
                     status = Py_InitializeFromConfig(&config);
-                    FILE *file = fopen("main.py", "r");
+                    FILE *file = fopen("/scripts/main.py", "r");
                     if (file)
                     {
-                        PyRun_SimpleFile(file, "main.py");
+                        PyRun_SimpleFile(file, "/scripts/main.py");
                         fclose(file);
                     }
                     Py_Finalize();
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
                 status = PyConfig_SetArgv(&config, 2, args);
                 if (strcmp(action, "-find") == 0)
                 {
-                    execlp("./resfinder", "./main", argv[3], NULL);
+                    execlp("./resfinder", "./iris+", argv[3], NULL);
                     return 1;
                 }
             }
