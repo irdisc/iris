@@ -27,7 +27,7 @@ Install: all
 
 .PHONY: uninstall
 uninstall:
-    @echo "Removing binaries from $(INSTALL_DIR)..."
+	@echo "Removing binaries from $(INSTALL_DIR)..."
 	rm -f $(TARGET)
 	rm -f $(INSTALL_DIR)/iris+
 	rm -f $(INSTALL_DIR)/resfinder
