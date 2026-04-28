@@ -1,5 +1,4 @@
-#!/bin/bash
-mkdir -p build
-sudo make
-cp bin/refinder /usr/local/bin/
+#!/bin/sh
+echo "Starting the installer"
+sudo make install
 echo "Installed refinder to /usr/local/bin/"
