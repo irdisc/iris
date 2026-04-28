@@ -37,7 +37,7 @@ git clone https://github.com/transcrimee/iris+.git && cd iris+
 ### Install Scripts
 ```bash
 # Then run install.sh
-./intall.sh 
+./lintall.sh 
 ```
 ---
 #### Or 
