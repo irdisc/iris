@@ -10,8 +10,11 @@ int main(void)
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(DARKPURPLE);
         DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        if (GuiButton((Rectangle){25, 25, 125, 30}, "start"))
+        {
+        }
         EndDrawing();
     }
 
