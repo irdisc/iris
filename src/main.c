@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
 				status = PyConfig_SetArgv(&config, 2, args);
 				if (strcmp(action, "-find") == 0)
 				{
-					execlp("./resfinder", "./iris+", argv[3], NULL);
+					execlp("./bin/resfinder", "./bin/iris+", argv[3], NULL);
 					return 1;
 				}
 			}
