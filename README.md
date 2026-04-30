@@ -1,5 +1,9 @@
 # Iris+
 Iris+ is tool for **Scaning Port** or **Domain Resolveing** and more soon. Program in **C** and **CPython.**
+
+- [Features](#key-features)
+- [Installer](#install-scripts)
+- [UnInstaller](#to-uninstall-use-uninstallersh)
 ## Requirements
 * [**CPython**](https://github.com/python/cpython)
 ## Debian base system
@@ -37,18 +41,33 @@ git clone https://github.com/transcrimee/iris+.git && cd iris+
 ### Install Scripts
 ```bash
 # Then run install.sh
-./lintall.sh 
+./intall.sh 
 ```
 ---
 #### Or 
 ```bash
 # Then run mkdir
-mkdir -p build && cd build
+mkdir -p build 
 ```
 --- 
 #### Next
 ```bash
 # Then run make
-make
+make install
 ```
 ---
+#### To Uninstall. use *uninstaller.sh*
+```bash
+# Install Scripts
+./uninstaller.sh
+```
+---
+<p align="center">
+  <a href="transcirme.com"> Website</a> •
+  <a href="crime@theft.bio">Email</a> •
+  <a href="https://www.linkedin.com/in/transcrime">LinkedIn</a>
+</p>
+<p align="center">
+  <a href="LICENSE-MIT">License: MIT</a><a href="LICENSE"> | PROPRIETARY LICENSE</a>
+</p>
+</p>
