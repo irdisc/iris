@@ -7,4 +7,6 @@
 
 int getsub(const char *domain);
 
+int subdomain(const char *domain);
+
 #endif
