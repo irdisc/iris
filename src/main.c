@@ -45,6 +45,8 @@ int main(int argc, char *argv[])
 			printf("  -v, --version  Show version info\n");
 			printf("--------------- SCAN PORT ---------------\n");
 			printf("  -scan, requires -tcp or -udp and <IP> Optional: > -ipv6\n");
+      printf("--------------- SUBDOMAIN ---------------\n");
+      printf(" -subdomain requiers -find and then the <DOMAIN>\n");
 			return 0;
 		}
 		else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0)
@@ -80,35 +82,39 @@ int main(int argc, char *argv[])
 				if (strcmp(action, "-tcp") == 0)
 				{
 					status = Py_InitializeFromConfig(&config);
-					FILE *file = fopen("/scripts/main.py", "r");
+					FILE *file = fopen("scripts/main.py", "r");
 					if (file)
 					{
-						PyRun_SimpleFile(file, "/scripts/main.py");
+						PyRun_SimpleFile(file, "scripts/main.py");
 						fclose(file);
 					}
 					Py_Finalize();
 					PyConfig_Clear(&config);
 					PyMem_RawFree(wIP);
+          PyMem_RawFree(wIPv6);
+          PyMem_RawFree(waction);
 					return 0;
 				}
 				else if (strcmp(action, "-udp") == 0) // Added check for -udp action
 				{
 					status = Py_InitializeFromConfig(&config);
-					FILE *file = fopen("/scripts/main.py", "r");
+					FILE *file = fopen("scripts/main.py", "r");
 					if (file)
 					{
-						PyRun_SimpleFile(file, "/scripts/main.py");
+						PyRun_SimpleFile(file, "scripts/main.py");
 						fclose(file);
 					}
 					Py_Finalize();
 					PyConfig_Clear(&config);
 					PyMem_RawFree(wIP);
+          PyMem_RawFree(wIPv6);
+          PyMem_RawFree(waction);
 					return 0;
 				}
 			}
 			else
 			{
-				printf("Er111ror: -scan requires -tcp | -udp <192.0.2.1>\n");
+				printf("Error: -scan requires -tcp | -udp <192.0.2.1>\n");
 				return 1;
 			}
 			// Move the index past the arguments for -scan
@@ -122,28 +128,43 @@ int main(int argc, char *argv[])
 
 			{
 				const char *action = argv[i + 1]; // Required argument for action (-tcp or -udp)
-				const char *DOMAIN = argv[i + 2]; // Required argument for IP address
+        char *DOMAIN = strdup(argv[i + 2]);
 				// const char *IPv6 = (i + 3 < argc) ? argv[i + 3] : "IPv4"; // Optional argument for IPv6, default to "IPv4" if not provided
-				int result = -1;
-				PyStatus status;
-				PyConfig config;
-				PyConfig_InitIsolatedConfig(&config);
-
-				wchar_t *wIP = Py_DecodeLocale(DOMAIN, NULL);
-				wchar_t *waction = Py_DecodeLocale(action, NULL);
-				// wchar_t *wIPv6 = Py_DecodeLocale(IPv6, NULL);
-
-				wchar_t *args[] = {waction, wIP};
-				status = PyConfig_SetArgv(&config, 2, args);
+			  
 				if (strcmp(action, "-find") == 0)
 				{
-					execlp("./bin/resfinder", "./bin/iris+", argv[3], NULL);
+					execlp("resfinder", "resfinder", argv[3], NULL);
+          free(DOMAIN);
+          perror("Could not open!");
 					return 1;
 				}
 			}
 			else
 			{
 				printf("Error: -resfinder requires -find <google.com>\n");
+				return 1;
+			}
+		}
+    else if (strcmp(argv[i], "-subdomain") == 0)
+		{
+			if (i + 2 < argc)
+
+			{
+				const char *action = argv[i + 1]; // Required argument for action (-tcp or -udp)
+        char *DOMAIN = strdup(argv[i + 2]);
+				// const char *IPv6 = (i + 3 < argc) ? argv[i + 3] : "IPv4"; // Optional argument for IPv6, default to "IPv4" if not provided
+			  
+				if (strcmp(action, "-find") == 0)
+				{
+					execlp("subdomain", "subdomain", argv[3], NULL);
+          free(DOMAIN);
+          perror("Could not open!");
+					return 1;
+				}
+			}
+			else
+			{
+				printf("Error: -subdomain requires -find <google.com>\n");
 				return 1;
 			}
 		}
