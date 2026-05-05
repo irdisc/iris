@@ -11,14 +11,14 @@ all: $(TARGET)
 
 $(BIN_DIR)/iris+: src/main.c 
 	@mkdir -p $(BIN_DIR)
-	   $(CC) $^ $(LDFLAGS) -o $@ 
+	   $(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@ 
 
 
 $(BIN_DIR)/resfinder: modules/scripts/resfinder.c libnet/libnet.c
 	@mkdir -p $(BIN_DIR)
 	   $(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
 
-Install: all 
+install: all 
 	@echo "Installing to $(INSTALL_DIR)..."
 	@mkdir -p $(INSTALL_DIR)
 	install -m 755 $(BIN_DIR)/iris+ $(INSTALL_DIR)/iris+
