@@ -4,8 +4,8 @@ CFLAGS = -Iinclude -I./libnet/include -I/usr/include/python3.15  -Wall
 LDFLAGS = -lpython3.15
 BIN_DIR = build
 INSTALL_DIR = $(PREFIX)/bin
-SRC = src/main.c /modules/scripts/resfinder.c
-TARGET = $(BIN_DIR)/iris+ $(BIN_DIR)/resfinder
+SRC = src/main.c /modules/scripts/resfinder.c /modules/scripts/subdomain.c
+TARGET = $(BIN_DIR)/iris+ $(BIN_DIR)/resfinder $(BIN_DIR)/subdomain
 
 all: $(TARGET)
 
@@ -18,12 +18,16 @@ $(BIN_DIR)/resfinder: modules/scripts/resfinder.c libnet/libnet.c
 	@mkdir -p $(BIN_DIR)
 	   $(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
 
+$(BIN_DIR)/subdomain: modules/scripts/subdomain.c libnet/libnet.c
+	@mkdir -p $(BIN_DIR)
+	   $(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
+
 install: all 
 	@echo "Installing to $(INSTALL_DIR)..."
 	@mkdir -p $(INSTALL_DIR)
 	install -m 755 $(BIN_DIR)/iris+ $(INSTALL_DIR)/iris+
 	install -m 755 $(BIN_DIR)/resfinder $(INSTALL_DIR)/resfinder
-
+	install -m 755 $(BIN_DIR)/subdomain $(INSTALL_DIR)/subdomain
 
 .PHONY: uninstall
 uninstall:
@@ -31,3 +35,6 @@ uninstall:
 	rm -f $(TARGET)
 	rm -f $(INSTALL_DIR)/iris+
 	rm -f $(INSTALL_DIR)/resfinder
+	rm -f $(INSTALL_DIR)/subdomain
+
+
