@@ -22,10 +22,10 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 import socket
 import time
 import sys
+from concurrent.futures import ThreadPoolExecutor
 
-def request(self, IP):
- for Port in range(1, 1024):
-
+def request(IP, Protocol, IPv6, port):
+ #for Port in range(1, total_ports + 1):
   if IPv6 == "-ipv6":
    scan = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
    if Protocol == "tcp": 
@@ -43,11 +43,11 @@ def request(self, IP):
 
   try:
     #time.sleep(5)
-    result = scan.connect_ex((IP, Port))
+    result = scan.connect_ex((IP, port))
     if result == 0:
-     print(f"OPEN: IP: {IP}", f"Port:{Port}")
+     print(f"OPEN: IP: {IP}", f"Port:{port}")
     #else:
-     #print(f"CLOSE: IP: {IP}", f"Port: {Port}")  
+     #print(f"CLOSE: IP: {IP}", f"Port: {port}")  
   #except Exception as e:
      #print("test error:") 
   except socket.gaierror as e:
@@ -85,8 +85,14 @@ if __name__ == '__main__':
     IP = sys.argv[1] 
     Protocol = sys.argv[0]
     IPv6 = sys.argv[2]
+    total_ports = 1024
+    
     print(f"Internet Protocol Type: {IPv6}") 
     print(f"Protocol: {Protocol}") 
     print(f"IP address passed to script: {IP}")
-    request(self="", IP=IP)
-    
+    ##request(self="", IP=IP)
+    print(sys._is_gil_enabled())
+    with ThreadPoolExecutor(max_workers=100) as executor:
+        for port in range(1, total_ports + 1):
+         executor.submit(request, IP, Protocol, IPv6, port)
+     
