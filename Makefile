@@ -1,13 +1,21 @@
 CC = gcc 
 PREFIX ?= /usr/local
-CFLAGS = -Iinclude -I./libnet/include -I/usr/include/python3.15  -Wall
-LDFLAGS = -lpython3.15
+CFLAGS = -Iinclude -I./libnet/include $(PYTHON_CFLAGS)  -Wall
+LDFLAGS = $(PYTHON_LDFLAGS)
 BIN_DIR = build
 INSTALL_DIR = $(PREFIX)/bin
 SRC = src/main.c /modules/scripts/resfinder.c /modules/scripts/subdomain.c
 TARGET = $(BIN_DIR)/iris+ $(BIN_DIR)/resfinder $(BIN_DIR)/subdomain
-
+PYTHON_CONFIG := $(shell command -v python3.15-config 2> /dev/null)
 all: $(TARGET)
+
+ifeq ($(PYTHON_CONFIG),)
+	@echo "Error CPython 3.15-config is not installed! please install python3.15-dev"
+endif	
+
+PYTHON_CFLAGS := $(shell $(PYTHON_CONFIG) --include)
+PYTHON_LDFLAGS := $(shell $(PYTHON_CONFIG) --ldflags --embed)
+ 
 
 $(BIN_DIR)/iris+: src/main.c 
 	@mkdir -p $(BIN_DIR)
