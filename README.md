@@ -1,5 +1,5 @@
 # Iris+
-Iris+ is tool for **Scaning Port** or **Domain Resolveing** and more soon. Program in **C** and **CPython.**
+Iris+ is tool for **Scaning Port** or **Domain Resolveing** and **Subdomain Finder**. Program made in **C** and **CPython.**
 
 - [Features](#key-features)
 - [Installer](#install-scripts)
