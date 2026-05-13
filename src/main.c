@@ -18,10 +18,12 @@
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
  */
-
+#define PY_SSIZE_T_CLEAN
 #include <stdio.h>
 #include <stdbool.h>
 #include <time.h>
+#include <limits.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -71,17 +73,39 @@ int main(int argc, char *argv[])
 				PyConfig config;
 				PyConfig_InitIsolatedConfig(&config);
 
+        char abs_path[PATH_MAX];
+        if (getcwd(abs_path, sizeof(abs_path)) == NULL) {
+          perror("getcwd() error");
+          return 1;
+        }  
+        
+        char python_exe[PATH_MAX + 64];
+        snprintf(python_exe, sizeof(python_exe), "%s/.venv/bin/python", abs_path);
+
+        if (access(python_exe, F_OK) == -1) {
+           fprintf(stderr, "Error: Virtual environment not found at %s\n", python_exe);
+           return 1;
+        }   
+
+        wchar_t *w_abs_path = Py_DecodeLocale(python_exe, NULL);
+        status = PyConfig_SetString(&config, &config.program_name, w_abs_path);
+        status = PyConfig_SetString(&config, &config.executable, w_abs_path);
+
 				wchar_t *wIP = Py_DecodeLocale(IP, NULL);
 				wchar_t *waction = Py_DecodeLocale(action, NULL);
 				wchar_t *wIPv6 = Py_DecodeLocale(IPv6, NULL);
 
-				wchar_t *args[] = {waction, wIP, wIPv6};
+				wchar_t *args[] = {waction, wIP, wIPv6, L"scripts/main.py"};
 				status = PyConfig_SetArgv(&config, 3, args); // Set the command-line arguments for the Python interpreter
 
 				// Check if the action is -tcp or -udp and run the corresponding Python code
 				if (strcmp(action, "-tcp") == 0)
 				{
 					status = Py_InitializeFromConfig(&config);
+          if (PyStatus_Exception(status)) {
+            return 1;
+          }
+
 					FILE *file = fopen("scripts/main.py", "r");
 					if (file)
 					{
@@ -97,6 +121,11 @@ int main(int argc, char *argv[])
 				}
 				else if (strcmp(action, "-udp") == 0) // Added check for -udp action
 				{
+          status = Py_InitializeFromConfig(&config);
+          if (PyStatus_Exception(status)) {
+            return 1;
+          }
+
 					status = Py_InitializeFromConfig(&config);
 					FILE *file = fopen("scripts/main.py", "r");
 					if (file)
@@ -161,16 +190,75 @@ int main(int argc, char *argv[])
           perror("Could not open!");
 					return 1;
 				}
+      }  
+		}
+    else if (strcmp(argv[i], "-search") == 0)
+		{
+			if (i + 2 < argc)
+       
+			{
+			  const char *action = argv[i + 1];						  // Required argument for action (-tcp or -udp)
+				const char *IP = argv[i + 2];							  // Required argument for IP address
+				const char *IPv6 = (i + 3 < argc) ? argv[i + 3] : "IPv4"; // Optional argument for IPv6, default to "IPv4" if not provided
+				int result = -1;
+				PyStatus status;
+				PyConfig config;
+				PyConfig_InitIsolatedConfig(&config);
+        
+        char abs_path[PATH_MAX];
+        if (getcwd(abs_path, sizeof(abs_path)) == NULL) {
+          perror("getcwd() error");
+          return 1;
+        }  
+        
+        char python_exe[PATH_MAX + 64];
+        snprintf(python_exe, sizeof(python_exe), "%s/.venv/bin/python", abs_path);
+
+        if (access(python_exe, F_OK) == -1) {
+           fprintf(stderr, "Error: Virtual environment not found at %s\n", python_exe);
+           return 1;
+        }   
+
+        wchar_t *w_abs_path = Py_DecodeLocale(python_exe, NULL);
+        status = PyConfig_SetString(&config, &config.program_name, w_abs_path);
+        status = PyConfig_SetString(&config, &config.executable, w_abs_path);
+
+				wchar_t *wIP = Py_DecodeLocale(IP, NULL);
+				wchar_t *waction = Py_DecodeLocale(action, NULL);
+				wchar_t *wIPv6 = Py_DecodeLocale(IPv6, NULL);
+
+				wchar_t *args[] = {waction, wIP, wIPv6, L"scripts/main.py"};			
+				status = PyConfig_SetArgv(&config, 3, args);
+			  
+				if (strcmp(action, "-looks") == 0)
+				{
+          status = Py_InitializeFromConfig(&config);
+          if (PyStatus_Exception(status)) {
+            return 1;
+          }
+
+         	status = Py_InitializeFromConfig(&config);
+					FILE *file = fopen("scripts/search.py", "r");
+					if (file)
+					{
+						PyRun_SimpleFile(file, "scripts/search.py");
+						fclose(file);
+					}
+					Py_Finalize();
+					PyConfig_Clear(&config);
+					PyMem_RawFree(wIP);
+          PyMem_RawFree(wIPv6);
+          PyMem_RawFree(waction);
+					return 0;			
+ 				}
 			}
 			else
 			{
 				printf("Error: -subdomain requires -find <google.com>\n");
 				return 1;
 			}
-		}
-
+	  } 
 		// If the argument starts with '-' but is not recognized, print an error message
-
 		else if (argv[i][0] == '-')
 		{ // Removed the extra ']' here
 			printf("Unknown option: %s\n", argv[i]);
@@ -181,5 +269,5 @@ int main(int argc, char *argv[])
 			printf("Processing file: %s\n", argv[i]);
 		}
 	}
-	return 0;
-}
+  return 0;
+ } 
