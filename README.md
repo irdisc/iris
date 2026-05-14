@@ -5,14 +5,31 @@ Iris+ is tool for **Scaning Port** or **Domain Resolveing** and **Subdomain Find
 - [Installer](#install-scripts)
 - [UnInstaller](#to-uninstall-use-uninstallersh)
 ## Requirements
-* [**CPython**](https://github.com/python/cpython)
+* [**CPython 3.15**](https://github.com/python/cpython)
 ## Debian base system
 ```bash
 sudo apt install build-essential
 ```
+## Debian base system SSL Headers
+```bash
+sudo apt install libssl-dev zliblg-dev
+```
 ## Arch base system
 ```bash
 sudo pacman -S base-devel
+```
+---
+## CPython 3.15
+```bash
+# Explicity command the configuration tool to include OpenSSL support
+.configure --with-openssl --enable-optimizations
+
+# Compile using all available CPU processing cores
+make -j$(nproc)
+
+# Reinstall the binaries over your current /usr/local environment
+sudo make altinstall
+
 ```
 ---
 ## ✨ Key Features
@@ -63,7 +80,7 @@ make install
 ```
 ---
 <p align="center">
-  <a href="transcirme.com"> Website</a> •
+  <a href="https://transcrime.com"> Website</a> •
   <a href="crime@theft.bio">Email</a> •
   <a href="https://www.linkedin.com/in/transcrime">LinkedIn</a>
 </p>
