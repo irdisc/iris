@@ -2,7 +2,7 @@
 Iris+ is tool for **Scaning Port** or **Domain Resolveing** and **Subdomain Finder**. Program made in **C** and **CPython.**
 
 > [!WARNING]  
-> We are moving to Gitlab no update will be made to iris if look for update go to https://gitlab.com/irdisc/iris.
+> We are moving to Gitlab no update will be made to iris if looking for update go to https://gitlab.com/irdisc/iris.
 
 - [Features](#key-features)
 - [Installer](#install-scripts)
